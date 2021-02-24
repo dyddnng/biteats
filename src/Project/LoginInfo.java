@@ -9,14 +9,15 @@ public class LoginInfo implements Serializable {
     private HashMap<String, String> login ;
     private static final long serialVersionUID = 3L;
 
-    LoginInfo(HashMap<String, String> hash) {
+    LoginInfo(HashMap<String, String> hash) { //hash 만 받아서 생성하는 생성자. id/password값만 직렬화해서 쓰려고 만듦
         this.login = hash;
     }
 
-    public HashMap<String, String> getLogin() {
+    public HashMap<String, String> getLogin() { //getter 메소드. 로그인시에 쓰임
         return login;
     }
 
+    //생성자에서 바로 파일을 써서 회원정보 파일을 만든다
     public LoginInfo(String id, HashMap<String, String> login) {
 
         String filename = "C:\\BitEats\\LoginInfo\\" +id + ".txt"; // 객체를 직렬화해서 write

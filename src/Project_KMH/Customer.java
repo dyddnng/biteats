@@ -1,3 +1,4 @@
+/*
 package Project_KMH;
 
 import Project.Food;
@@ -55,4 +56,4 @@ public class Customer {
     public String toString() {
         return "Customer [id=" + id + ", money=" + money + ", orderList=" + orderList + "]";
     }
-}
+}*/

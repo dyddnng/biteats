@@ -1,3 +1,4 @@
+/*
 package Project_KMH;
 
 import Project.Food;
@@ -30,4 +31,4 @@ public class Ordered {
                "- 총 가격: " + this.totalPrice +
                "*********************";
     }
-}
+}*/
