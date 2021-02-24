@@ -62,7 +62,7 @@ public class BitEats {
         System.out.println("비밀번호를 입력해주세요");
         String password = scanner.nextLine();
 
-        String filename = "C:\\BitEats\\LoginInfo\\" + id + ".txt";
+        String filename = loginInfoPath + id + ".txt";
 
         FileInputStream fis = null;
         BufferedInputStream bis = null;
