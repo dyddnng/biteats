@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class BitEats {
-    ArrayList<Customer> customerList;
-    ArrayList<Store> storeList;
+    private HashMap<String, String> users;
+    private ArrayList<Customer> customerList;
+    private ArrayList<Store> storeList;
 
     public BitEats() {
         customerList = new ArrayList<Customer>();
@@ -23,6 +24,11 @@ public class BitEats {
         String id = scanner.nextLine();
         System.out.println("비밀번호를 입력해주세요");
         String password = scanner.nextLine();
+
+        this.users = new HashMap<>();
+        this.users.put(id, password);
+        LoginInfo temp = new LoginInfo(id, users);
+        temp = null; //다음 회원가입을 위해 객체 null화
 
     }
 

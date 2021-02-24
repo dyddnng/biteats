@@ -17,10 +17,9 @@ public class LoginInfo implements Serializable {
         return login;
     }
 
-    public LoginInfo(String type, String id, HashMap<String, String> login) {
-        String path = "";
+    public LoginInfo(String id, HashMap<String, String> login) {
 
-        String filename = "C:\\BitEats\\LoginInfo\\" + path +"\\" +id + ".txt"; // 객체를 직렬화해서 write
+        String filename = "C:\\BitEats\\LoginInfo\\" +id + ".txt"; // 객체를 직렬화해서 write
 
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
