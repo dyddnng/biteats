@@ -18,6 +18,7 @@ public class BitEats {
         //customerList = new ArrayList<Customer>();
         storeList = new ArrayList<Store>();
     }
+
     //프로그램 사용에 필요한 경로가 있는지 확인 후 없으면 만들어주는 함수
     public void checkFileExists() {
         File f = new File(this.loginInfoPath);
@@ -62,7 +63,7 @@ public class BitEats {
         System.out.println("비밀번호를 입력해주세요");
         String password = scanner.nextLine();
 
-        String filename = loginInfoPath + id + ".txt";
+        String filename = loginInfoPath + "\\" + id + ".txt";
 
         FileInputStream fis = null;
         BufferedInputStream bis = null;
