@@ -1,6 +1,6 @@
 package Project;
 
-public class Food {
+public class Main{
     public static void main(String[] args) {
         System.out.println("main");
     }
