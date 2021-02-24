@@ -1,8 +1,5 @@
 package Project;
 
-//import Project_KMH.Customer;
-import Project_KMH.Store;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,13 +8,14 @@ import java.util.Scanner;
 public class BitEats {
     private HashMap<String, String> users;
     //private ArrayList<Project_KMH.Customer> customerList;
-    private ArrayList<Project_KMH.Store> storeList;
+    private ArrayList<Store> storeList;
     private final String loginInfoPath = "C:\\BitEats\\LoginInfo";
 
     public BitEats() {
         //customerList = new ArrayList<Customer>();
         storeList = new ArrayList<Store>();
     }
+    
     //프로그램 사용에 필요한 경로가 있는지 확인 후 없으면 만들어주는 함수
     public void checkFileExists() {
         File f = new File(this.loginInfoPath);

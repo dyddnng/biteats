@@ -1,14 +1,14 @@
-/*
-package Project_KMH;
-
-import Project.Food;
-
+package Project;
 import java.util.ArrayList;
 
 public class Ordered {
-    private ArrayList<Project.Food> food;
+    //구매자의 주문목록
+    private ArrayList<Food> food;
+    //가게이름
     private String storeName;
+    //총 가격
     private int totalPrice;
+    //구매자 아이디
     private String customerId;
 
     public Ordered(ArrayList<Food> food, int totalPrice, String customerId) {
@@ -31,4 +31,4 @@ public class Ordered {
                "- 총 가격: " + this.totalPrice +
                "*********************";
     }
-}*/
+}
