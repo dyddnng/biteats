@@ -60,9 +60,8 @@ public class BitEats {
 //          UserInfo r1 = (UserInfo) in.readObject(); //다운캐스팅을 해줘야함
 
             LoginInfo loginInfo = (LoginInfo) in.readObject();
-            HashMap map = loginInfo.getLogin();
 
-            if (map.get(id).equals(password)) { //아이디와 키값이 같다면
+            if (loginInfo.getLogin().get(id).equals(password)) { //아이디와 키값이 같다면
                 System.out.println("로그인성공 ㅎ");
             } else {
                 System.out.println("비밀번호가 틀립니다!!");
