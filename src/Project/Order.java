@@ -6,7 +6,7 @@ public class Order {
     private String storeName;
     private String customerId;
     private int orderNum;
-    
+
     @Override
     public String toString() {
         return "Order [food=" + food + ", totalPrice=" + totalPrice + ", storeName=" + storeName + ", customerId="

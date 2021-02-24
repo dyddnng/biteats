@@ -6,17 +6,17 @@ public class Customer {
     private String id;
     private int money;
     private ArrayList<Order> orderList;
-    
+
     public Customer() {
         orderList = new ArrayList<Order>();
     }
-    
+
     public void order() {
-        
+
     }
-    
+
     public void pay() {
-        
+
     }
 
     @Override
