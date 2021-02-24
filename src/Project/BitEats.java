@@ -1,5 +1,8 @@
 package Project;
 
+import Project_KMH.Customer;
+import Project_KMH.Store;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +10,8 @@ import java.util.Scanner;
 
 public class BitEats {
     private HashMap<String, String> users;
-    private ArrayList<Customer> customerList;
-    private ArrayList<Store> storeList;
+    private ArrayList<Project_KMH.Customer> customerList;
+    private ArrayList<Project_KMH.Store> storeList;
 
     public BitEats() {
         customerList = new ArrayList<Customer>();

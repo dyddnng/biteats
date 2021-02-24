@@ -1,14 +1,16 @@
-package Project;
+package Project_KMH;
+
+import Project.Food;
 
 import java.util.ArrayList;
 
 public class Ordered {
-    private ArrayList<Food> food;
+    private ArrayList<Project.Food> food;
     private String storeName;
     private int totalPrice;
     private String customerId;
 
-    public Ordered(ArrayList<Food> food, int totalPrice,String customerId) {
+    public Ordered(ArrayList<Food> food, int totalPrice, String customerId) {
         this.food = food;
         this.storeName = food.get(0).getStoreName();
         this.totalPrice = totalPrice;

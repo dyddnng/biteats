@@ -1,4 +1,4 @@
-package Project;
+package Project_KMH;
 
 public class Food {
     private String foodName;

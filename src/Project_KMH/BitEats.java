@@ -1,10 +1,13 @@
-package Project;
+package Project_KMH;
+
+import Project.Customer;
+import Project.Store;
 
 import java.util.ArrayList;
 
 public class BitEats {
-    ArrayList<Customer> customerList;
-    ArrayList<Store> storeList;
+    ArrayList<Project.Customer> customerList;
+    ArrayList<Project.Store> storeList;
 
     public BitEats() {
         customerList = new ArrayList<Customer>();

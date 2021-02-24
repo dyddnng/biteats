@@ -1,17 +1,19 @@
-package Project;
+package Project_KMH;
+
+import Project.Food;
 
 import java.util.ArrayList;
 
 public class Customer {
     private String id;
     private int money;
-    private ArrayList<Food> orderList;
+    private ArrayList<Project.Food> orderList;
     private ArrayList<Ordered> orderedList;
     private int totalPrice;
     
     public Customer() {
         this.money = 100000;
-        this.orderList = new ArrayList<Food>();
+        this.orderList = new ArrayList<Project.Food>();
     }
     
     public void printOrderList() {
@@ -20,7 +22,7 @@ public class Customer {
         }
     }
     
-    public void plusOrder(Food food) {
+    public void plusOrder(Project.Food food) {
         this.orderList.add(food);
         this.totalPrice += food.getPrice();
     }

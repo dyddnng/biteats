@@ -1,5 +1,7 @@
 package Project;
 
+import Project_KMH.Food;
+
 public class Order {
     private Food food;
     private int totalPrice;
