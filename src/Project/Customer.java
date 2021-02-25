@@ -21,6 +21,10 @@ public class Customer {
     
     //주문하기전 주문목록확인
     public void printOrderList() {
+        if(this.orderList.size() == 0) {
+            System.out.println("주문목록에 메뉴가 없습니다.");
+            return;
+        }
         for(int i=0; i<this.orderList.size();i++) {
             System.out.println(this.orderList.get(i).toString());
         }
@@ -51,6 +55,9 @@ public class Customer {
         if(this.money < this.totalPrice) {
             System.out.println("잔액이 부족합니다.");
             System.out.println("현재금액 : " + this.money);
+        } else if(this.orderList.size() == 0) {
+            System.out.println("주문목록에 메뉴가 없습니다.");
+            return;
         } else {
             this.money-=this.totalPrice;
             orderedList.add(new Ordered(this.orderList,this.totalPrice,this.id));
