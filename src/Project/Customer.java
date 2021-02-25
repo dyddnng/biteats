@@ -16,7 +16,6 @@ public class Customer {
     
     public Customer() {
         this.money = 100000;
-        this.orderList = new ArrayList<Food>();
     }
     
     //주문하기전 주문목록확인
