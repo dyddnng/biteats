@@ -13,6 +13,7 @@ public class BitEats implements Serializable {
     private final String storePath = "C:\\BitEats\\Store";
     private File f;
     private Store store;
+    private BitEats bitstores;
     private static final long serialVersionUID = 3L;
 
 
@@ -171,48 +172,9 @@ public class BitEats implements Serializable {
             }
         }
     }
-    public void showMenu() {
 
-        String filename = "menulist.txt";
-
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        ObjectInputStream in = null;
-
-        try {
-
-            fis = new FileInputStream(filename);
-            bis = new BufferedInputStream(fis);
-            in = new ObjectInputStream(bis); // 역직렬화 코드
-
-            Store menulist = (Store)in.readObject();
-
-            System.out.println(menulist);
-
-
-        } catch (FileNotFoundException fe) {
-            System.out.println("파일이 존재하지 않습니다.");
-        } catch (EOFException eofe) { // End Of File의 약자
-            System.out.println("끝 " + eofe.getMessage());
-
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-
-        } catch (ClassNotFoundException cnfe) {
-            System.out.println(cnfe.getMessage());
-
-        } finally{
-
-            try {
-                in.close();
-                bis.close();
-                fis.close();
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-
-        }
-
+    public void showMenu(Store s) {
+        s.getMenu();
     }
 
     public void storeMenu() {
@@ -221,6 +183,7 @@ public class BitEats implements Serializable {
         int choice = scanner.nextInt();
         switch(choice) {
             case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                showMenu(storeList.get(0));
                 break;
             case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
                 break;
@@ -248,11 +211,12 @@ public class BitEats implements Serializable {
             bis = new BufferedInputStream(fis);
             in = new ObjectInputStream(bis); // 역직렬화 코드
 
-            BitEats storelist01 = (BitEats) in.readObject();
+            BitEats storelist = (BitEats) in.readObject();
+            this.bitstores = storelist;
 
-            for (int i = 0; i < storelist01.getStoreList().size(); i++) {
-                System.out.print(i+1 + " : ");
-                System.out.println(storelist01.getStoreList().get(i));
+            for (int i = 0; i < storelist.getStoreList().size(); i++) {
+                System.out.print(i + 1 + " : ");
+                System.out.println(storelist.getStoreList().get(i));
             }
 
 

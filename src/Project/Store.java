@@ -32,6 +32,12 @@ public class Store implements Serializable{
     public void addMenu(Food food) {
         this.menu.add(food);
     }
+    public void getMenu() {
+        for(int i = 0; i < menu.size(); i++) {
+            System.out.print( i + 1 + "번 메뉴 : ");
+            System.out.println(menu.get(i));
+        }
+    }
 
 
 
