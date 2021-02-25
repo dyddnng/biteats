@@ -82,7 +82,7 @@ public class BitEats {
         /*
             "C:\\BitEats\\LoginInfo" 안의 File 객체의 list를 불러오는 함수
              거기 있는 파일들이 모두 file 객체다
-             이 객체들을 files[i]에 하나씩 넣자
+             이 객체들을 files[i]에 하나씩 넣자.
              지금 LoginInfo 폴더 안에 있는 파일들은 가입된 아이디가 파일명이니
              이 리스트와 중복하는 아이디가 들어오면 중복체크를 할 수 있다      */
 
