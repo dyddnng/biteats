@@ -139,20 +139,10 @@ public class BitEats implements Serializable {
                 System.out.println("로그인을 성공했습니다!");
                 showStore();
                 storeMenu();
+                //결제
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                while (choice != 3) //3번이 결제버튼
-//                    System.out.println("가게 목록을 불러옵니다!");
-//                //showMenu()로 목록 불러옴
-//                System.out.println("대충 가게 목록 불러왔다는 이야기");
-//                System.out.println("대충 원하는 가게를 선택해달라는 이야기");
-//                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
-//                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
-//                //while문 빠져나옴
-//                System.out.println("대충 결제완료 후 돈뺏기고 거래내역 저장되었다는 이야기");
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+                System.out.println("아디오스");
+                System.exit(0);
             } else {
                 System.out.println("비밀번호가 틀립니다!!\n메인으로 돌아갑니다.");
             }
@@ -183,23 +173,44 @@ public class BitEats implements Serializable {
         System.out.println("가게를 선택해주세요");
         int choice = scanner.nextInt();
         switch(choice) {
-            case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
-                showMenu(storeList.get(choice-1));
-                int foodenumber = scanner.nextInt();
-                selectMenu(choice, foodenumber);
-                break;
+            case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.");
+                ordering(choice);
+                return;
             case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
                 showMenu(storeList.get(choice-1));
-                break;
+                ordering(choice);
+                return;
+
             case 3: System.out.println("꿀맛김밥에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
                 showMenu(storeList.get(choice-1));
-                break;
+                ordering(choice);
+                return;
+
             case 4: System.out.println("피자나라치킨공주에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
                 showMenu(storeList.get(choice-1));
-                break;
+                ordering(choice);
+                return;
+
             default : System.out.println("잘못 입력하셨습니다.");
-                break;
+                return;
+
         }
+    }
+
+    public void ordering(int choice) {
+        Scanner scanner = new Scanner(System.in);
+        int foodNumber = -1;
+        while(foodNumber != 0 ) {
+            showMenu(storeList.get(choice-1));  //목록 보여줌(처음)
+            System.out.println("원하시는 메뉴를 선택해주세요.\n선택한 메뉴를 결제하시려면 0을 입력해주세요.");
+            foodNumber = scanner.nextInt();
+            if (foodNumber == 0) {  //foodNumber가 0이면 메뉴 선택에서 벗어나 결제로 가야한다.
+                break;
+            }
+            selectMenu(choice, foodNumber);
+            getOrderList();
+        }
+
     }
 
     public void selectMenu(int choice, int foodNumber) {
@@ -326,6 +337,16 @@ public class BitEats implements Serializable {
 
     public ArrayList<Store> getStoreList() {
         return storeList;
+    }
+    public void getOrderList() {
+        int totalprice = 0;
+        System.out.println("=======현재까지 담긴 음식=======");
+        for(int i = 0; i < this.oredrList.size(); i++) {
+            System.out.println(this.oredrList.get(i));
+            totalprice += this.oredrList.get(i).getPrice();
+        }
+        System.out.println("총 결제금액 : " + totalprice);
+        System.out.println("==============================");
     }
 }
 

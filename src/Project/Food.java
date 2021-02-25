@@ -30,6 +30,6 @@ public class Food implements Serializable {
     }
     @Override
     public String toString() {
-        return "음식=" + foodName + ", 가격=" + price + "]";
+        return "[음식 = " + this.foodName + " 가격 = " + this.price + "]";
     }
 }
