@@ -203,7 +203,7 @@ public class BitEats implements Serializable {
     }
 
     public void selectMenu(int choice, int foodNumber) {
-        oredrList.add(getStoreList().get(choice).getFood(foodNumber));
+        this.oredrList.add(getStoreList().get(choice - 1).getFood(foodNumber - 1));
     }
 
     // 가게 목록 불러오기 함수
