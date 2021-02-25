@@ -17,7 +17,7 @@ public class BitEats implements Serializable {
     private File storePathToFile;
     private Store store;
     private BitEats bitstores;
-    private List<Food> oredrList;
+    private List<Food> orderList;
     private Customer currentCustomer; // 현재 로그인되어있는 사용자
     private static final long serialVersionUID = 3L;
 
@@ -280,12 +280,14 @@ public class BitEats implements Serializable {
             if (foodNumber == 0) {  //foodNumber가 0이면 결제
                 if(currentCustomer.getMoney() < totalPrice) {
                     System.out.println("가지고 있는 돈이 결제금액 보다 적습니다. 메뉴를 초기화합니다.");
-                    this.oredrList.clear(); //잔액부족으로 결제실패시 담은음식 초기화
+                    this.orderList.clear(); //잔액부족으로 결제실패시 담은음식 초기화
                     ordering(choice); //다시 음식을 고른다
                 } else { //결제금액이 충분할경우
                     this.currentCustomer.setMoney(this.currentCustomer.getMoney() - totalPrice);
                     System.out.printf("결제가 완료되었습니다! 결제금액 %d원, 잔액 %d원\n" , totalPrice ,this.currentCustomer.getMoney());
                     saveLoginInfo();
+                    new Ordered(this.orderList, totalPrice, currentCustomer.getId()); //주문내역생성
+
                     break;
                 }
             }
@@ -327,7 +329,7 @@ public class BitEats implements Serializable {
     }
 
     public void selectMenu(int choice, int foodNumber) {
-        this.oredrList.add(getStoreList().get(choice - 1).getFood(foodNumber - 1));
+        this.orderList.add(getStoreList().get(choice - 1).getFood(foodNumber - 1));
     }
 
     // 가게 목록 불러오기 함수
@@ -388,7 +390,7 @@ public class BitEats implements Serializable {
 
         //storeList = new ArrayList<String>();
         storeList = new ArrayList<Store>();
-        oredrList = new ArrayList<Food>();
+        orderList = new ArrayList<Food>();
 
         //BitEats가 생성되면 가게들 정보가 자동으로 생성됨
 
@@ -459,9 +461,9 @@ public class BitEats implements Serializable {
     public int getOrderList() {
         int totalprice = 0;
         System.out.println("=======현재까지 담긴 음식=======");
-        for(int i = 0; i < this.oredrList.size(); i++) {
-            System.out.println(this.oredrList.get(i));
-            totalprice += this.oredrList.get(i).getPrice();
+        for(int i = 0; i < this.orderList.size(); i++) {
+            System.out.println(this.orderList.get(i));
+            totalprice += this.orderList.get(i).getPrice();
         }
         System.out.println("총 결제금액 : " + totalprice);
         System.out.println("==============================");

@@ -2,6 +2,7 @@ package Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer implements Serializable {
     //구매자 아이디
@@ -9,9 +10,9 @@ public class Customer implements Serializable {
     //구매자 돈
     private int money;
     //주문목록 ( 결제전 )
-    private ArrayList<Food> orderList;
+    private List<Food> orderList;
     //주문내역 ( 결제후 )
-    private ArrayList<Ordered> orderedList;
+    private List<Ordered> orderedList;
     //총 가격
     private int totalPrice;
     private static final long serialVersionUID = 3L;
@@ -83,17 +84,12 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public ArrayList<Food> getOrderList() {
-        return orderList;
-    }
+
 
     public void setOrderList(ArrayList<Food> orderList) {
         this.orderList = orderList;
     }
 
-    public ArrayList<Ordered> getOrderedList() {
-        return orderedList;
-    }
 
     public void setOrderedList(ArrayList<Ordered> orderedList) {
         this.orderedList = orderedList;
