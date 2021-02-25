@@ -136,6 +136,7 @@ public class BitEats implements Serializable {
             if (loginInfo.getLogin().get(id).equals(password)) { //아이디와 키값이 같다면
                 System.out.println("로그인을 성공했습니다!");
                 showStore();
+                storeMenu();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                while (choice != 3) //3번이 결제버튼
@@ -215,8 +216,10 @@ public class BitEats implements Serializable {
     }
 
     public void storeMenu() {
-        System.out.println("==========비트이츠 가게 목록==========");
-        switch(1) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("가게를 선택해주세요");
+        int choice = scanner.nextInt();
+        switch(choice) {
             case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
                 break;
             case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
