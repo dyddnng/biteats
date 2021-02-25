@@ -20,7 +20,7 @@ public class BitEats {
         //customerList = new ArrayList<Customer>();
         storeList = new ArrayList<Store>();
     }
-
+    //실행
     public void boot() {
         int choice = 9;
         while (choice != 0) {
