@@ -1,8 +1,9 @@
 package Project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Customer {
+public class Customer implements Serializable {
     //구매자 아이디
     private String id;
     //구매자 돈
@@ -13,10 +14,20 @@ public class Customer {
     private ArrayList<Ordered> orderedList;
     //총 가격
     private int totalPrice;
-    
-    public Customer() {
+    private static final long serialVersionUID = 3L;
+
+
+    public Customer(String id) { //이 생성자는 회원가입시에 쓰입니다.
+        this.id = id;
         this.money = 100000;
     }
+
+    public Customer(String id, int money) { //이 생성자는 회원정보 갱신에 쓰입니다.
+        this.id = id;
+        this.money = money;
+    }
+
+
     
     //주문하기전 주문목록확인
     public void printOrderList() {
@@ -64,7 +75,50 @@ public class Customer {
         }
     }
 
-    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ArrayList<Food> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(ArrayList<Food> orderList) {
+        this.orderList = orderList;
+    }
+
+    public ArrayList<Ordered> getOrderedList() {
+        return orderedList;
+    }
+
+    public void setOrderedList(ArrayList<Ordered> orderedList) {
+        this.orderedList = orderedList;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
     @Override
     public String toString() {
         return "Customer [id=" + id + ", money=" + money + ", orderList=" + orderList + "]";
