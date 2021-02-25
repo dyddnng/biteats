@@ -39,6 +39,11 @@ public class Store implements Serializable{
         }
     }
 
+    public Food getFood(int index) {
+        return menu.get(index);
+    }
+
+
 
 
     @Override

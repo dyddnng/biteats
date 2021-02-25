@@ -14,6 +14,7 @@ public class BitEats implements Serializable {
     private File f;
     private Store store;
     private BitEats bitstores;
+    private List<Food> oredrList;
     private static final long serialVersionUID = 3L;
 
 
@@ -183,17 +184,26 @@ public class BitEats implements Serializable {
         int choice = scanner.nextInt();
         switch(choice) {
             case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
-                showMenu(storeList.get(0));
+                showMenu(storeList.get(choice-1));
+                int foodenumber = scanner.nextInt();
+                selectMenu(choice, foodenumber);
                 break;
             case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                showMenu(storeList.get(choice-1));
                 break;
             case 3: System.out.println("꿀맛김밥에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                showMenu(storeList.get(choice-1));
                 break;
             case 4: System.out.println("피자나라치킨공주에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                showMenu(storeList.get(choice-1));
                 break;
             default : System.out.println("잘못 입력하셨습니다.");
                 break;
         }
+    }
+
+    public void selectMenu(int choice, int foodNumber) {
+        oredrList.add(getStoreList().get(choice).getFood(foodNumber));
     }
 
     // 가게 목록 불러오기 함수
@@ -249,7 +259,7 @@ public class BitEats implements Serializable {
         f = new File(this.loginInfoPath);
         //storeList = new ArrayList<String>();
         storeList = new ArrayList<Store>();
-        //store = new Store();
+        oredrList = new ArrayList<Food>();
 
         //BitEats가 생성되면 가게들 정보가 자동으로 생성됨
 
