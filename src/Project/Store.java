@@ -43,9 +43,6 @@ public class Store implements Serializable{
         return menu.get(index);
     }
 
-
-
-
     @Override
     public String toString() {
         return name;

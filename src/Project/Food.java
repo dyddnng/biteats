@@ -16,6 +16,7 @@ public class Food implements Serializable {
         this.foodName = foodName;
         this.price = price;
     }
+
     
     public int getPrice() {
         return price;

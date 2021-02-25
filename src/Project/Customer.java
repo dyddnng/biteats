@@ -60,21 +60,7 @@ public class Customer implements Serializable {
         }
         
     }
-    
-    //주문목록 결제
-    public void pay() {
-        if(this.money < this.totalPrice) {
-            System.out.println("잔액이 부족합니다.");
-            System.out.println("현재금액 : " + this.money);
-        } else if(this.orderList.size() == 0) {
-            System.out.println("주문목록에 메뉴가 없습니다.");
-            return;
-        } else {
-            this.money-=this.totalPrice;
-            orderedList.add(new Ordered(this.orderList,this.totalPrice,this.id));
-            orderList.removeAll(orderList);      
-        }
-    }
+
 
     public String getId() {
         return id;

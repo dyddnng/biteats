@@ -18,31 +18,31 @@ public class Ordered implements Serializable {
     private final String orderHistoryPath = "C:\\BitEats\\OrderHistory";
     private static final long serialVersionUID = 3L;
 
+    public String getOrderHistoryPath() {
+        return orderHistoryPath;
+    }
 
-
-    public Ordered(List<Food> food, int totalPrice, String customerId) {  //구매내역 발생하면 바로 파일로 저장됩니다
+    public Ordered(List<Food> food, String storeName, int totalPrice, String customerId) {  //구매내역 발생하면 바로 파일로 저장됩니다
+        this.storeName = storeName;
         this.food = new ArrayList<Food>();
         this.food = food;
         this.totalPrice = totalPrice;
         this.customerId = customerId;
-
-        String filename = orderHistoryPath + "\\" + customerId + ".txt"; // 객체를 직렬화해서 write
+    }
+    public void saveOrderHistory(Ordered o) {
+        String filename = orderHistoryPath + "\\" + this.customerId + ".txt"; // 객체를 직렬화해서 write
 
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         ObjectOutputStream out = null;
 
         try {
-            fos = new FileOutputStream(filename); //append
+            fos = new FileOutputStream(filename, false); //append
             bos = new BufferedOutputStream(fos);
-            // 여기까지 하고 직렬화를 하기 위해 아래와 같이 한다
             out = new ObjectOutputStream(bos);
 
-            //직렬화 대상 (객체)
-            Ordered ordered = new Ordered(this.food, this.totalPrice, this.customerId);
 
-            //이제 다른곳으로 보낼거임. filename으로
-            out.writeObject(ordered); // 분해해서 Userdata.txt 에 쓴다
+            out.writeObject(o); // 분해해서 Userdata.txt 에 쓴다
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -56,17 +56,18 @@ public class Ordered implements Serializable {
         }
     }
 
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
     @Override
     public String toString() {
-        String foodInfo =null;
-        for(int i=0;i<food.size();i++) {
-            foodInfo+=i+". "+"음식정보: " + this.food.get(i).getfoodName() + ", "+this.food.get(i).getPrice() + "\n";
-        }
-        return "*********************" + "\n" +
+
+        return "************구매내역************" + "\n" +
                "- 구매자 아이디: " + this.customerId + "\n"+
-               "- 가게: " + this.storeName + "\n"+
-               "- 주문음식: " + "\n" + foodInfo + "\n" +
+               "- 가게 이름: " + this.storeName + "\n"+
+               "- 주문음식: " + food +"\n" +
                "- 총 가격: " + this.totalPrice +
-               "*********************";
+               "\n****************************";
     }
 }

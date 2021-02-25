@@ -12,9 +12,11 @@ public class BitEats implements Serializable {
     private final String loginInfoPath = "C:\\BitEats\\LoginInfo";
     private final String customersPath = "C:\\BitEats\\Customers";
     private final String storePath = "C:\\BitEats\\Store";
+    private final String orderHistoryPath = "C:\\BitEats\\OrderHistory";
     private File loginPathToFile;
     private File customerPathToFile;
     private File storePathToFile;
+    private File orderHistoryPathToFile;
     private Store store;
     private BitEats bitstores;
     private List<Food> orderList;
@@ -29,7 +31,7 @@ public class BitEats implements Serializable {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("안녕하세요 비트이츠 서비스 입니다. 명령어를 입력해주세요");
-            System.out.println("1. 회원가입 2. 로그인 0. 나가기");
+            System.out.println("1. 회원가입 2. 로그인 0. 종료");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 :
@@ -48,9 +50,6 @@ public class BitEats implements Serializable {
                     break;
             }
         }
-        System.out.println("end line------------------------------------");
-
-
     }
 
     //프로그램 사용에 필요한 경로가 있는지 확인 후 없으면 만들어주는 함수
@@ -80,13 +79,6 @@ public class BitEats implements Serializable {
         System.out.println("비밀번호를 입력해주세요");
         String password = scanner.nextLine();
 
-        /*
-            "C:\\BitEats\\LoginInfo" 안의 File 객체의 list를 불러오는 함수
-             거기 있는 파일들이 모두 file 객체다
-             이 객체들을 files[i]에 하나씩 넣자
-             지금 LoginInfo 폴더 안에 있는 파일들은 가입된 아이디가 파일명이니
-             이 리스트와 중복하는 아이디가 들어오면 중복체크를 할 수 있다      */
-
         File[] files = loginPathToFile.listFiles();
 
         // 불러온 파일 리스트를 ArrayList에 넣어서 for문으로 중복 ID 확인과정을 거친다
@@ -98,9 +90,7 @@ public class BitEats implements Serializable {
                 System.out.println("이미 가입된 아이디입니다.\n메인으로 돌아갑니다.\n");
             }
         }
-
-        // 중복이 아니라면 정상가입 진행
-        // 아이디와 비밀번호를 각각 키와 밸류로 지정해 해쉬맵에 넣는다
+        // 중복이 아니라면 아이디와 비밀번호를 각각 키와 밸류로 지정해 해쉬맵에 넣는다
         this.users = new HashMap<>();
         this.users.put(id, password);
 
@@ -147,9 +137,6 @@ public class BitEats implements Serializable {
     public void login() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("비트이츠 로그인 시스템입니다!!");
-
-
-
         System.out.println("아이디를 입력해주세요");
         String id = scanner.nextLine();
         System.out.println("비밀번호를 입력해주세요");
@@ -174,6 +161,7 @@ public class BitEats implements Serializable {
                 System.out.println("로그인을 성공했습니다!");
                 setCurrentCustomer(id);
                 showMeTheMoney();       //로그인 성공시 인사와 잔액을 보여줍니다.
+                showOrderHistory();
                 showStore();
                 storeMenu();
                 System.out.println("아디오스");
@@ -240,39 +228,41 @@ public class BitEats implements Serializable {
     }
 
     public void storeMenu() {
+        String storeName = "";
         Scanner scanner = new Scanner(System.in);
         System.out.println("가게를 선택해주세요");
         int choice = scanner.nextInt();
         switch(choice) {
-            case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.");
-                //showMenu(storeList.get(choice-1));
-                ordering(choice);
-                return;
-            case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
-                //showMenu(storeList.get(choice-1));
-                ordering(choice);
+            case 1: storeName = "아빠곰 돈까스";
+                System.out.printf("%s에 오신 것을 환영합니다.\n", storeName);
+                ordering(choice, storeName);
                 return;
 
-            case 3: System.out.println("꿀맛김밥에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
-                //showMenu(storeList.get(choice-1));
-                ordering(choice);
+            case 2: storeName = "덕자네방앗간";
+                System.out.printf("%s에 오신 것을 환영합니다.\n", storeName);
+                ordering(choice, storeName);
                 return;
 
-            case 4: System.out.println("피자나라치킨공주에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
-                //showMenu(storeList.get(choice-1));
-                ordering(choice);
+            case 3: storeName = "꿀맛김밥";
+                System.out.printf("%s에 오신 것을 환영합니다.\n", storeName);
+                ordering(choice, storeName);
                 return;
 
-            default : System.out.println("잘못 입력하셨습니다.");
+            case 4: storeName = "피자나라치킨공주";
+                System.out.printf("%s에 오신 것을 환영합니다.\n", storeName);
+                ordering(choice, storeName);
                 return;
 
+            default : System.out.println("잘못 입력하셨습니다.\n");
+                return;
         }
     }
 
-    public void ordering(int choice) {
+    public void ordering(int choice, String storeName) {
         Scanner scanner = new Scanner(System.in);
         int foodNumber = -1;
         int totalPrice = 0;
+        System.out.println("=======================================");
         while(foodNumber != 0 ) {
             showMenu(storeList.get(choice-1));  //목록 보여줌(처음)
             System.out.println("원하시는 메뉴를 선택해주세요.\n선택한 메뉴를 결제하시려면 0을 입력해주세요.");
@@ -281,13 +271,14 @@ public class BitEats implements Serializable {
                 if(currentCustomer.getMoney() < totalPrice) {
                     System.out.println("가지고 있는 돈이 결제금액 보다 적습니다. 메뉴를 초기화합니다.");
                     this.orderList.clear(); //잔액부족으로 결제실패시 담은음식 초기화
-                    ordering(choice); //다시 음식을 고른다
-                } else { //결제금액이 충분할경우
+                    ordering(choice, storeName); //다시 음식을 고른다
+                    break;
+                } else {    //결제금액이 충분할경우
                     this.currentCustomer.setMoney(this.currentCustomer.getMoney() - totalPrice);
                     System.out.printf("결제가 완료되었습니다! 결제금액 %d원, 잔액 %d원\n" , totalPrice ,this.currentCustomer.getMoney());
                     saveLoginInfo();
-                    new Ordered(this.orderList, totalPrice, currentCustomer.getId()); //주문내역생성
-
+                    Ordered o = new Ordered(this.orderList, storeName, totalPrice, currentCustomer.getId()); //주문내역생성
+                    o.saveOrderHistory(o);
                     break;
                 }
             }
@@ -295,6 +286,47 @@ public class BitEats implements Serializable {
             totalPrice = getOrderList();
         }
 
+    }
+
+    public void showOrderHistory() {
+        String filename =  orderHistoryPath + "\\" + currentCustomer.getId() + ".txt";
+
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        ObjectInputStream in = null;
+
+        try {
+
+            fis = new FileInputStream(filename);
+            bis = new BufferedInputStream(fis);
+            in = new ObjectInputStream(bis); // 역직렬화 코드
+
+            Ordered ordered = (Ordered) in.readObject();
+
+            System.out.println(ordered);
+
+        } catch (FileNotFoundException fe) {
+            System.out.println("첫 번째 주문이시네요! 앞으로도 많이많이 이용해주세요 ~^ ^");
+        } catch (EOFException eofe) { // End Of File의 약자
+            System.out.println("끝 " + eofe.getMessage());
+
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println(cnfe.getMessage());
+
+        } finally {
+
+            try {
+                in.close();
+                bis.close();
+                fis.close();
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+
+        }
     }
 
     public void saveLoginInfo () { //로그아웃시 회원정보 갱신하는 함수
@@ -307,7 +339,6 @@ public class BitEats implements Serializable {
         try {
             fos = new FileOutputStream(filename); //append
             bos = new BufferedOutputStream(fos);
-            // 여기까지 하고 직렬화를 하기 위해 아래와 같이 한다
             out = new ObjectOutputStream(bos);
 
             //직렬화 대상 (객체)
@@ -385,8 +416,10 @@ public class BitEats implements Serializable {
         loginPathToFile = new File(this.loginInfoPath);
         customerPathToFile = new File(this.customersPath);
         storePathToFile = new File(this.storePath);
+        orderHistoryPathToFile = new File(this.orderHistoryPath);
 
         checkFileExists(storePathToFile);
+        checkFileExists(orderHistoryPathToFile);
 
         //storeList = new ArrayList<String>();
         storeList = new ArrayList<Store>();
