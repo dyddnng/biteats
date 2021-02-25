@@ -6,28 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-
-/*
-검토할 사항
-지금 login 함수에서 아이디나 비밀번호가 맞지 않을 경우
-재귀호출로 다시 로그인 할 수 있도록 login함수를 다시 부르는데
-이게 나을지 아니면 그냥 while문을 돌릴지
-어느 게 더 효율적일까?
-
- */
-
-public class BitEats {
+public class BitEats implements Serializable {
     private HashMap<String, String> users;
-    //private ArrayList<Store> storeList;
-    private ArrayList<String> storeList;
+    private ArrayList<Store> storeList;
     private final String loginInfoPath = "C:\\BitEats\\LoginInfo";
     private final String storePath = "C:\\BitEats\\Store";
     private File f;
-    Scanner scanner = new Scanner(System.in);
+    private Store store;
+    private static final long serialVersionUID = 3L;
+
+
 
     public void boot() {
         int choice = 9;
         while (choice != 0) {
+            Scanner scanner = new Scanner(System.in);
+
             System.out.println("안녕하세요 비트이츠 서비스 입니다. 명령어를 입력해주세요");
             System.out.println("1. 회원가입 2. 로그인 0. 나가기");
             choice = scanner.nextInt();
@@ -82,7 +76,7 @@ public class BitEats {
         /*
             "C:\\BitEats\\LoginInfo" 안의 File 객체의 list를 불러오는 함수
              거기 있는 파일들이 모두 file 객체다
-             이 객체들을 files[i]에 하나씩 넣자.
+             이 객체들을 files[i]에 하나씩 넣자
              지금 LoginInfo 폴더 안에 있는 파일들은 가입된 아이디가 파일명이니
              이 리스트와 중복하는 아이디가 들어오면 중복체크를 할 수 있다      */
 
@@ -110,9 +104,6 @@ public class BitEats {
         // 직렬화가 끝난 후 다음을 회원가입을 위해 temp를 비운다
         temp = null;
 
-        // main에서 join()만 호출하면 되게 여기서 login() 호출하려 했는데
-        // 이러니까 로그인 성공하고 나서 또 로그인하라고 뜬다
-        // login();
 
     }
     //로그인 기능
@@ -143,7 +134,9 @@ public class BitEats {
             LoginInfo loginInfo = (LoginInfo) in.readObject();
 
             if (loginInfo.getLogin().get(id).equals(password)) { //아이디와 키값이 같다면
-                System.out.println("로그인성공 ㅎ");
+                System.out.println("로그인을 성공했습니다!");
+                showStore();
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                while (choice != 3) //3번이 결제버튼
 //                    System.out.println("가게 목록을 불러옵니다!");
@@ -177,49 +170,166 @@ public class BitEats {
             }
         }
     }
+    public void showMenu() {
 
+        String filename = "menulist.txt";
+
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        ObjectInputStream in = null;
+
+        try {
+
+            fis = new FileInputStream(filename);
+            bis = new BufferedInputStream(fis);
+            in = new ObjectInputStream(bis); // 역직렬화 코드
+
+            Store menulist = (Store)in.readObject();
+
+            System.out.println(menulist);
+
+
+        } catch (FileNotFoundException fe) {
+            System.out.println("파일이 존재하지 않습니다.");
+        } catch (EOFException eofe) { // End Of File의 약자
+            System.out.println("끝 " + eofe.getMessage());
+
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println(cnfe.getMessage());
+
+        } finally{
+
+            try {
+                in.close();
+                bis.close();
+                fis.close();
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+
+        }
+
+    }
+
+    public void storeMenu() {
+        System.out.println("==========비트이츠 가게 목록==========");
+        switch(1) {
+            case 1: System.out.println("아빠곰돈까스에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                break;
+            case 2: System.out.println("덕자네방앗간에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                break;
+            case 3: System.out.println("꿀맛김밥에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                break;
+            case 4: System.out.println("피자나라치킨공주에 오신 것을 환영합니다.\n원하시는 메뉴를 선택해주세요.");
+                break;
+            default : System.out.println("잘못 입력하셨습니다.");
+                break;
+        }
+    }
+
+    // 가게 목록 불러오기 함수
     public void showStore() {
 
+        String filename0 = storePath + "\\storelist.txt";
 
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        ObjectInputStream in = null;
+
+        try {
+
+            fis = new FileInputStream(filename0);
+            bis = new BufferedInputStream(fis);
+            in = new ObjectInputStream(bis); // 역직렬화 코드
+
+            BitEats storelist01 = (BitEats) in.readObject();
+
+            for (int i = 0; i < storelist01.getStoreList().size(); i++) {
+                System.out.print(i+1 + " : ");
+                System.out.println(storelist01.getStoreList().get(i));
+            }
+
+
+        } catch (FileNotFoundException fe) {
+            System.out.println("파일이 존재하지 않습니다.");
+        } catch (EOFException eofe) { // End Of File의 약자
+            System.out.println("끝 " + eofe.getMessage());
+
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println(cnfe.getMessage());
+
+        } finally{
+
+            try {
+                in.close();
+                bis.close();
+                fis.close();
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+
+        }
     }
 
     public BitEats() {
 
         f = new File(this.loginInfoPath);
-        File f2 = new File(this.storePath);
-        //storeList = new ArrayList<Store>();
-        storeList = new ArrayList<String>();
+        //storeList = new ArrayList<String>();
+        storeList = new ArrayList<Store>();
+        //store = new Store();
 
+        //BitEats가 생성되면 가게들 정보가 자동으로 생성됨
 
-        // BitEats가 Store 정보를 가지고 있으니 여기서 객체 생성한다
-        Store store111 = new Store("아빠곰 돈까스","로스안심까스",8500);
-        Store store112 = new Store("아빠곰 돈까스","치즈돈까스",9000);
-        Store store211 = new Store("덕자네 방앗간","떡볶이",4000);
-        Store store212 = new Store("덕자네 방앗간","돈까스",6000);
-        Store store311 = new Store("꿀맛김밥","새우김밥",4000);
-        Store store312 = new Store("꿀맛김밥","참치김밥",3500);
-        Store store411 = new Store("피자나라 치킨공주","더블포테이토피자",15000);
-        Store store412 = new Store("피자나라 치킨공주","콤비네이션피자",12000);
+        Store store001 = new Store("아빠곰돈까스");
+        Store store002 = new Store("덕자네 방앗간");
+        Store store003 = new Store("꿀맛 김밥");
+        Store store004 = new Store("피자나라 치킨공주");
 
-        // 가게 목록 리스트
-        storeList.add("아빠곰 돈까스");
-        storeList.add("덕자네 방앗간");
-        storeList.add("꿀맛김밥");
-        storeList.add("피자나라 치킨공주");
+        storeList.add(store001);
+        storeList.add(store002);
+        storeList.add(store003);
+        storeList.add(store004);
 
+        Food food000 = new Food("로스안심까스", 8500);
+        Food food001 = new Food("치즈돈까스", 9000);
+        Food food002 = new Food("떡볶이", 4000);
+        Food food003 = new Food("왕돈까스", 6000);
+        Food food004 = new Food("새우김밥", 4500);
+        Food food005 = new Food("참치김밥", 4000);
+        Food food006 = new Food("더블포테이토피자", 15000);
+        Food food007 = new Food("콤비네이션피자", 12000);
+
+        store001.addMenu(food000);
+        store001.addMenu(food001);
+        store002.addMenu(food002);
+        store002.addMenu(food003);
+        store003.addMenu(food004);
+        store003.addMenu(food005);
+        store004.addMenu(food006);
+        store004.addMenu(food007);
+    }
+    public void write() {
         // storelist 직렬화해서 내보내기
-        checkFileExists(f2);
-        String storelist = "storelist.txt";
+        String path = this.storePath + "\\" + "storelist.txt";
+
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         ObjectOutputStream oos = null;
 
         try {
-            fos = new FileOutputStream(storelist);
+            fos = new FileOutputStream(path);
             bos = new BufferedOutputStream(fos);
             oos = new ObjectOutputStream(bos);
+            //직렬화 대상 bit
+            BitEats bit = new BitEats();
 
-            oos.writeObject(storelist);
+            oos.writeObject(bit);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -237,9 +347,21 @@ public class BitEats {
 
     }
 
+    public ArrayList<Store> getStoreList() {
+        return storeList;
+    }
+}
+
+/*    public void addStore(String name, String foodName, int price) {
+
+        storeList.add(store = new Store(name,foodName,price));*/
+
+
+
+
 /*    @Override
     public String toString() {
         return "BitEats [customerList=" + customerList + ", storeList=" + storeList + "]";
     }*/
 
-}
+

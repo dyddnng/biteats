@@ -1,17 +1,20 @@
 package Project;
 
-public class Food {
+import java.io.Serializable;
+
+public class Food implements Serializable {
     //음식이름
     private String foodName;
     //음식가격
     private int price;
     //음식이 포함되있는 가게이름
     private String storeName;
-    
-    public Food(String storeName, String foodName, int price) {
+    private static final long serialVersionUID = 3L;
+
+
+    public Food(String foodName, int price) {
         this.foodName = foodName;
         this.price = price;
-        this.storeName = storeName;
     }
     
     public int getPrice() {
