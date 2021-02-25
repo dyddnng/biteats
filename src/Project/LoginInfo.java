@@ -21,7 +21,7 @@ public class LoginInfo implements Serializable {
 
     //생성자에서 바로 파일을 써서 회원정보 파일을 만든다
     public LoginInfo(String id, HashMap<String, String> login) {
-
+        //로그인정보 경로에 id와 같은이름의 파일 생성
         String filename = loginInfoPath + "\\" +id + ".txt"; // 객체를 직렬화해서 write
 
         FileOutputStream fos = null;
@@ -31,14 +31,11 @@ public class LoginInfo implements Serializable {
         try {
             fos = new FileOutputStream(filename); //append
             bos = new BufferedOutputStream(fos);
-            // 여기까지 하고 직렬화를 하기 위해 아래와 같이 한다
             out = new ObjectOutputStream(bos);
 
-            //직렬화 대상 (객체)
             LoginInfo loginInfo = new LoginInfo(login);
 
-            //이제 다른곳으로 보낼거임. filename으로
-            out.writeObject(loginInfo); // 분해해서 Userdata.txt 에 쓴다
+            out.writeObject(loginInfo);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

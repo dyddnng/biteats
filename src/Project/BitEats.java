@@ -25,6 +25,7 @@ public class BitEats implements Serializable {
     private File orderHistoryPathToFile;
 
     public void boot() {  //BitEats 시작 명령어
+        write(); //가게목록을 쓰는 메소드
         int choice = 9;
         while (choice != 0) {
             Scanner scanner = new Scanner(System.in);
@@ -358,7 +359,6 @@ public class BitEats implements Serializable {
         ObjectInputStream in = null;
 
         try {
-
             fis = new FileInputStream(filename0);
             bis = new BufferedInputStream(fis);
             in = new ObjectInputStream(bis); // 역직렬화 코드
@@ -371,10 +371,9 @@ public class BitEats implements Serializable {
                 System.out.println(storelist.getStoreList().get(i));
             }
 
-
         } catch (FileNotFoundException fe) {
             System.out.println("파일이 존재하지 않습니다.");
-        } catch (EOFException eofe) { // End Of File의 약자
+        } catch (EOFException eofe) {
             System.out.println("끝 " + eofe.getMessage());
 
         } catch (IOException ioe) {
@@ -395,8 +394,24 @@ public class BitEats implements Serializable {
 
         }
     }
+    //가게목록 호출하는 getter메소드
+    public List<Store> getStoreList() {
+        return storeList;
+    }
+    //장바구니에 음식 담을 때마다 담긴 목록을 보여주는 메소드
+    public int getOrderList() {
+        int totalprice = 0;
+        System.out.println("=======현재까지 담긴 음식=======");
+        for(int i = 0; i < this.orderList.size(); i++) {
+            System.out.println(this.orderList.get(i));
+            totalprice += this.orderList.get(i).getPrice();
+        }
+        System.out.println("총 결제금액 : " + totalprice);
+        System.out.println("==============================");
+        return totalprice;
+    }
+    //프로그램 시작시 가게목록을 생성하는 메소드
     public void write() {
-        // storelist 직렬화해서 내보내기
         String path = this.storePath + "\\" + "storelist.txt";
 
         FileOutputStream fos = null;
@@ -426,21 +441,6 @@ public class BitEats implements Serializable {
 
         }
 
-    }
-
-    public List<Store> getStoreList() {
-        return storeList;
-    }
-    public int getOrderList() {
-        int totalprice = 0;
-        System.out.println("=======현재까지 담긴 음식=======");
-        for(int i = 0; i < this.orderList.size(); i++) {
-            System.out.println(this.orderList.get(i));
-            totalprice += this.orderList.get(i).getPrice();
-        }
-        System.out.println("총 결제금액 : " + totalprice);
-        System.out.println("==============================");
-        return totalprice;
     }
 
     public BitEats() {
