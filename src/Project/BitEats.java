@@ -106,11 +106,10 @@ public class BitEats implements Serializable {
             fos = new FileOutputStream(filename);
             bos = new BufferedOutputStream(fos);
             out = new ObjectOutputStream(bos);
-            //C
+
             Customer customer = new Customer(id);
 
-            //이제 다른곳으로 보낼거임. filename으로
-            out.writeObject(customer); // 분해해서 Userdata.txt 에 쓴다
+            out.writeObject(customer);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
