@@ -6,21 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+
+/*
+검토할 사항
+지금 login 함수에서 아이디나 비밀번호가 맞지 않을 경우
+재귀호출로 다시 로그인 할 수 있도록 login함수를 다시 부르는데
+이게 나을지 아니면 그냥 while문을 돌릴지
+어느 게 더 효율적일까?
+
+ */
+
 public class BitEats {
     private HashMap<String, String> users;
-    //private ArrayList<Project_KMH.Customer> customerList;
-    private ArrayList<Store> storeList;
+    //private ArrayList<Store> storeList;
+    private ArrayList<String> storeList;
     private final String loginInfoPath = "C:\\BitEats\\LoginInfo";
-    private File f = new File(loginInfoPath);
-
+    private final String storePath = "C:\\BitEats\\Store";
+    private File f;
     Scanner scanner = new Scanner(System.in);
 
-
-    public BitEats() {
-        //customerList = new ArrayList<Customer>();
-        storeList = new ArrayList<Store>();
-    }
-    //실행
     public void boot() {
         int choice = 9;
         while (choice != 0) {
@@ -42,17 +46,16 @@ public class BitEats {
                 default :
                     System.out.println("유효하지 않은 명령어입니다. 다시 확인해주세요");
                     break;
-                }
             }
+        }
         System.out.println("end line------------------------------------");
 
 
     }
 
-
     //프로그램 사용에 필요한 경로가 있는지 확인 후 없으면 만들어주는 함수
-    public void checkFileExists() {
-        File f = new File(this.loginInfoPath);
+    public void checkFileExists(File f) {
+
         if(!f.exists() || !f.isDirectory()) {
             System.out.println("디렉토리가 없는것을 발견했습니다. 디렉토리를 생성합니다.");
             if(f.mkdirs()) {
@@ -66,7 +69,7 @@ public class BitEats {
     }
 
     public void join() {
-        checkFileExists(); //경로 체크 함수 실행
+        checkFileExists(f); //경로 체크 함수 실행
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("비트이츠 회원가입 시스템입니다!!");
@@ -89,15 +92,9 @@ public class BitEats {
         List<String> ids = new ArrayList<String>();
 
         for(int i = 0; i < files.length; i++) {
-
-            // 파일명들을 ids배열의 인덱스에 넣는다
-            ids.add(files[i].getName());
-
-            // id와 일치하는 값이 있을 경우
-            if( ids.get(i).equals(id+".txt") ) {
-
-                System.out.println("사용할 수 없는 아이디입니다.\n다시 입력해주세요.\n");
-                join();
+            ids.add(files[i].getName()); // 파일명들을 ids배열의 인덱스에 넣는다
+            if( ids.get(i).equals(id+".txt") ) {  // id와 일치하는 값이 있을 경우
+                System.out.println("이미 가입된 아이디입니다.\n메인으로 돌아갑니다.\n");
             }
         }
 
@@ -118,11 +115,7 @@ public class BitEats {
         // login();
 
     }
-
-
-
-
-
+    //로그인 기능
     public void login() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("비트이츠 로그인 시스템입니다!!");
@@ -145,31 +138,31 @@ public class BitEats {
             bis = new BufferedInputStream(fis); //불러온걸 버퍼로옮기고
             in = new ObjectInputStream(bis); //버퍼로 옮긴걸 조립한다
 
-//          UserInfo r1 = (UserInfo) in.readObject(); //다운캐스팅을 해줘야함
+            //UserInfo r1 = (UserInfo) in.readObject(); //다운캐스팅을 해줘야함
 
             LoginInfo loginInfo = (LoginInfo) in.readObject();
 
             if (loginInfo.getLogin().get(id).equals(password)) { //아이디와 키값이 같다면
                 System.out.println("로그인성공 ㅎ");
-                int choice = scanner.nextInt();
-                while (choice != 3) //3번이 결제버튼
-                System.out.println("가게 목록을 불러옵니다!");
-                //showMenu()로 목록 불러옴
-                System.out.println("대충 가게 목록 불러왔다는 이야기");
-                System.out.println("대충 원하는 가게를 선택해달라는 이야기");
-                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
-                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
-                //while문 빠져나옴
-                System.out.println("대충 결제완료 후 돈뺏기고 거래내역 저장되었다는 이야기");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                while (choice != 3) //3번이 결제버튼
+//                    System.out.println("가게 목록을 불러옵니다!");
+//                //showMenu()로 목록 불러옴
+//                System.out.println("대충 가게 목록 불러왔다는 이야기");
+//                System.out.println("대충 원하는 가게를 선택해달라는 이야기");
+//                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
+//                System.out.println("대충 원하는 메뉴를 선택하거나 결제해달라는 이야기");
+//                //while문 빠져나옴
+//                System.out.println("대충 결제완료 후 돈뺏기고 거래내역 저장되었다는 이야기");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             } else {
-                System.out.println("비밀번호가 틀립니다!!\n다시 메인으로 돌아갑니다");
+                System.out.println("비밀번호가 틀립니다!!\n메인으로 돌아갑니다.");
             }
 
         } catch (FileNotFoundException fn) {
-            System.out.println("해당 아이디가 존재하지 않습니다");
-        } catch (EOFException eofe) {
-            System.out.println("파일이 끝났어오");
+            System.out.println("해당 아이디가 존재하지 않습니다.\n메인으로 돌아갑니다.");
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {
@@ -185,8 +178,68 @@ public class BitEats {
         }
     }
 
+    public void showStore() {
+
+
+    }
+
+    public BitEats() {
+
+        f = new File(this.loginInfoPath);
+        File f2 = new File(this.storePath);
+        //storeList = new ArrayList<Store>();
+        storeList = new ArrayList<String>();
+
+
+        // BitEats가 Store 정보를 가지고 있으니 여기서 객체 생성한다
+        Store store111 = new Store("아빠곰 돈까스","로스안심까스",8500);
+        Store store112 = new Store("아빠곰 돈까스","치즈돈까스",9000);
+        Store store211 = new Store("덕자네 방앗간","떡볶이",4000);
+        Store store212 = new Store("덕자네 방앗간","돈까스",6000);
+        Store store311 = new Store("꿀맛김밥","새우김밥",4000);
+        Store store312 = new Store("꿀맛김밥","참치김밥",3500);
+        Store store411 = new Store("피자나라 치킨공주","더블포테이토피자",15000);
+        Store store412 = new Store("피자나라 치킨공주","콤비네이션피자",12000);
+
+        // 가게 목록 리스트
+        storeList.add("아빠곰 돈까스");
+        storeList.add("덕자네 방앗간");
+        storeList.add("꿀맛김밥");
+        storeList.add("피자나라 치킨공주");
+
+        // storelist 직렬화해서 내보내기
+        checkFileExists(f2);
+        String storelist = "storelist.txt";
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream(storelist);
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+
+            oos.writeObject(storelist);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+
+            try {
+                oos.close();
+                bos.close();
+                fos.close();
+            } catch (Exception e2) {
+                // TODO: handle exception
+            }
+
+        }
+
+    }
+
 /*    @Override
     public String toString() {
         return "BitEats [customerList=" + customerList + ", storeList=" + storeList + "]";
     }*/
+
 }
