@@ -122,6 +122,7 @@ public class BitEats implements Serializable {
 
             }
         }
+        System.out.println("회원가입이 완료되었습니다!");
         // 직렬화가 끝난 후 다음을 회원가입을 위해 temp를 비운다
         temp = null;
 
@@ -156,7 +157,7 @@ public class BitEats implements Serializable {
                 showOrderHistory();     //최근 주문 목록을 보여준다.
                 showStore();            //가게 목록을 보여준다.
                 storeMenu();            //가게 메뉴를 보여준다.
-                System.out.println("주문이 완료되었습니다! \n 이용해주셔서 감사합니다!!");
+                System.out.println("주문이 완료되었습니다! \n이용해주셔서 감사합니다!!");
                 System.exit(0); //프로그램 종료
             } else {
                 System.out.println("비밀번호가 틀립니다!!\n메인으로 돌아갑니다.");
@@ -223,7 +224,7 @@ public class BitEats implements Serializable {
     public void storeMenu() {
         String storeName = "";
         Scanner scanner = new Scanner(System.in);
-        System.out.println("가게를 선택해주세요");
+        System.out.println("가게를 선택해주세요.");
         int choice = scanner.nextInt();
         switch(choice) {    //choice 번호에 따라 가게를 선택해 ordering 메소드를 호출한다
             case 1: storeName = "아빠곰 돈까스";
